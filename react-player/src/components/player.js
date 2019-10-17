@@ -9,8 +9,6 @@ const PlayControl = () => {
     const [currentSongNum, setCurrentSongNum] = useState(0);
 
     var songURL = "";
-    var songPrevURL = "";
-    var songNextURL = "";
 
     const LoadDatas = () => {
      fetch('https://assets.breatheco.de/apis/sound/songs')
@@ -54,18 +52,31 @@ const PlayControl = () => {
     }
 
     const PreviousSong = () => {
+
           setCurrentSongNum(currentSongNum - 1);
-          songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[currentSongNum].url;
-          setMyMusic(new Audio(songURL));
-          PauseSong();
-    }
-     console.log(currentSongNum);
+
+          if (currentSongNum !== 0) {
+             songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[currentSongNum].url;
+             setMyMusic(new Audio(songURL));
+             PauseSong();
+          }else{
+             let lastIndex = datas.length-1;
+             songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[lastIndex].url;
+             setMyMusic(new Audio(songURL));
+             PauseSong();
+          }
+          console.log(datas.length-1);
+
+    //console.log("previous" + currentSongNum);
+
     const NextSong = () => {
           setCurrentSongNum(currentSongNum + 1);
           songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[currentSongNum].url;
           setMyMusic(new Audio(songURL));
           PauseSong();
     }
+
+    //console.log("next" + currentSongNum);
 
     useEffect(() => {
          LoadDatas()
