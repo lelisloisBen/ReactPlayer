@@ -55,18 +55,19 @@ const PlayControl = () => {
 
           setCurrentSongNum(currentSongNum - 1);
 
-          if (currentSongNum !== 0) {
-             songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[currentSongNum].url;
+          if (currentSongNum === 0) {
+             let lastIndex = datas.length-1;
+             songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[lastIndex].url;
+             console.log(songURL);
              setMyMusic(new Audio(songURL));
              PauseSong();
           }else{
-             let lastIndex = datas.length-1;
-             songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[lastIndex].url;
+             songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[currentSongNum].url;
              setMyMusic(new Audio(songURL));
              PauseSong();
           }
-          console.log(datas.length-1);
-
+          //console.log(currentSongNum);
+    }
     //console.log("previous" + currentSongNum);
 
     const NextSong = () => {
