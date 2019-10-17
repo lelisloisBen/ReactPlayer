@@ -32,9 +32,10 @@ useEffect(() => {
        <>
           <div className="boxbtn mx-outo">
             <button type="button" className="btn btn-outline-primary">Play</button>
-            <button type="button" className="btn btn-outline-secondary">Pause</button>
-            <button type="button" className="btn btn-outline-success">Previous</button>
-            <button type="button" className="btn btn-outline-danger">Next</button>
+            <button type="button" className="btn btn-outline-danger">Pause</button>
+            <button type="button" className="btn btn-outline-secondary">Previous</button>
+            <button type="button" className="btn btn-outline-success">Next</button>
+
           </div>
           <div>
             <ol className="list-group">
