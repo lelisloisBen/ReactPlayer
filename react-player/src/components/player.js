@@ -16,13 +16,17 @@ const LoadDatas = () => {
         })
         .then(function(responseAsJson) {
             setDatas(responseAsJson);
-            console.log(responseAsJson);
+            //console.log(responseAsJson);
         })
         .catch(function(error) {
             console.log('Looks like there was a problem: \n', error);
         });
 }
 
+const Getplay = (e) => {
+    let songURL = "https://assets.breatheco.de/apis/sound/"+e.target.dataset.url;
+    console.log(songURL);
+}
 
 useEffect(() => {
     LoadDatas()
@@ -41,7 +45,14 @@ useEffect(() => {
             <ol className="list-group">
             { !datas ? ("Loading...") : datas.map(( item, index) => {
                 return (
-                    <li key={index} className="list-group-item clickme">{item.id} - {item.name} - URL = {item.url}</li>
+                    <li
+                        key={index}
+                        className="list-group-item clickme"
+                        onClick={Getplay}
+                        data-url={item.url}
+                    >
+                        {item.id} - {item.name} - URL = {item.url}
+                    </li>
                 )
 
             } ) }
