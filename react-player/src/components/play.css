@@ -1,0 +1,10 @@
+boddy {
+    background-color: whitesmoke;
+}
+
+.clickme {
+cursor: pointer;
+}
+.clickme:hover {
+background-color: red;
+}
