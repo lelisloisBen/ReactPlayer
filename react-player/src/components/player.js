@@ -6,9 +6,11 @@ const PlayControl = () => {
 
     const [datas, setDatas] = useState(null);
     const [myMusic, setMyMusic] = useState();
+    const [currentSongNum, setCurrentSongNum] = useState(0);
 
     var songURL = "";
-    var currentSongNum = 0;
+    var songPrevURL = "";
+    var songNextURL = "";
 
     const LoadDatas = () => {
      fetch('https://assets.breatheco.de/apis/sound/songs')
@@ -27,27 +29,43 @@ const PlayControl = () => {
         });
     }
 
-    const Getplay = (e) => {
-          songURL = "https://assets.breatheco.de/apis/sound/"+e.target.dataset.url;
-          currentSongNum = e.target.dataset.songnum;
+    const Getplay = (event) => {
+          songURL = "https://assets.breatheco.de/apis/sound/"+event.target.dataset.url;
+          //currentSongNum = event.target.dataset.songnum;
+          setCurrentSongNum(event.target.dataset.songnum);
+          //setCurrentSongNum(event.url);
           setMyMusic(new Audio(songURL));
-          console.log(currentSongNum)
-    }
 
+    }
+ //console.log("here samir "+currentSongNum);
    // console.log(myMusic);
    // console.log("num" + currentSongNum + songURL)
 
     const PlaySong = () => {
-          myMusic.play();
+        myMusic.pause();
+        myMusic.currentTime = 0;
+        myMusic.play();
 
     }
     const PauseSong = () => {
-          myMusic.pause();
-    }
-    const PreviousSong = () => {
-          myMusic.play();
+        myMusic.pause();
+        myMusic.currentTime = 0;
+        myMusic.pause();
     }
 
+    const PreviousSong = () => {
+          setCurrentSongNum(currentSongNum - 1);
+          songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[currentSongNum].url;
+          setMyMusic(new Audio(songURL));
+          PauseSong();
+    }
+     console.log(currentSongNum);
+    const NextSong = () => {
+          setCurrentSongNum(currentSongNum + 1);
+          songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[currentSongNum].url;
+          setMyMusic(new Audio(songURL));
+          PauseSong();
+    }
 
     useEffect(() => {
          LoadDatas()
@@ -59,7 +77,7 @@ const PlayControl = () => {
             <button type="button" className="btn btn-outline-primary" onClick={PlaySong}>Play</button>
             <button type="button" className="btn btn-outline-danger" onClick={PauseSong}>Pause</button>
             <button type="button" className="btn btn-outline-secondary" onClick={PreviousSong}>Previous</button>
-            <button type="button" className="btn btn-outline-success">Next</button>
+            <button type="button" className="btn btn-outline-success" onClick={NextSong}>Next</button>
 
           </div>
           <div>
