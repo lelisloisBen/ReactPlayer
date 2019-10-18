@@ -4,13 +4,13 @@ import './play.css';
 
 const PlayControl = () => {
 
-    const [datas, setDatas] = useState(null);
+    const [data, setData] = useState(null);
     const [myMusic, setMyMusic] = useState();
     const [currentSongNum, setCurrentSongNum] = useState(0);
 
     var songURL = "";
 
-    const LoadDatas = () => {
+    const LoadData = () => {
      fetch('https://assets.breatheco.de/apis/sound/songs')
         .then(function(response) {
             if (!response.ok) {
@@ -19,7 +19,7 @@ const PlayControl = () => {
         return response.json();
         })
         .then(function(responseAsJson) {
-            setDatas(responseAsJson);
+            setData(responseAsJson);
             //console.log(responseAsJson);
         })
         .catch(function(error) {
@@ -28,9 +28,9 @@ const PlayControl = () => {
     }
 
     const Getplay = (event) => {
-          songURL = "https://assets.breatheco.de/apis/sound/"+event.target.dataset.url;
-          //currentSongNum = event.target.dataset.songnum;
-          setCurrentSongNum(event.target.dataset.songnum);
+          songURL = "https://assets.breatheco.de/apis/sound/"+event.target.dataet.url;
+          //currentSongNum = event.target.dataet.songnum;
+          setCurrentSongNum(event.target.dataet.songnum);
           //setCurrentSongNum(event.url);
           setMyMusic(new Audio(songURL));
 
@@ -56,14 +56,14 @@ const PlayControl = () => {
           setCurrentSongNum(currentSongNum - 1);
 
           if (currentSongNum === 0) {
-             let lastIndex = datas.length-1;
-             songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[lastIndex].url;
+             let lastIndex = data.length-1;
+             songURL =  "https://assets.breatheco.de/apis/sound/"+ data[lastIndex].url;
              setCurrentSongNum(lastIndex);
              //console.log(currentSongNum + "Last Index" + lastIndex + songURL);
              setMyMusic(new Audio(songURL));
              PauseSong();
           }else{
-             songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[currentSongNum].url;
+             songURL =  "https://assets.breatheco.de/apis/sound/"+ data[currentSongNum].url;
              setMyMusic(new Audio(songURL));
              PauseSong();
               //console.log(currentSongNum +"previous" +songURL);
@@ -75,14 +75,14 @@ const PlayControl = () => {
     const NextSong = () => {
           setCurrentSongNum(currentSongNum + 1);
 
-          if (currentSongNum < datas.length - 1 ) {
-              songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[currentSongNum].url;
+          if (currentSongNum < data.length - 1 ) {
+              songURL =  "https://assets.breatheco.de/apis/sound/"+ data[currentSongNum].url;
               setMyMusic(new Audio(songURL));
-              //console.log(currentSongNum + "Last Index" + (datas.length - 1)  + songURL);
+              //console.log(currentSongNum + "Last Index" + (data.length - 1)  + songURL);
               PauseSong();
           }else{
               let firstindex = 1;
-              songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[firstindex].url;
+              songURL =  "https://assets.breatheco.de/apis/sound/"+ data[firstindex].url;
               setMyMusic(new Audio(songURL));
               //console.log(currentSongNum +"next" +songURL);
               PauseSong();
@@ -92,7 +92,7 @@ const PlayControl = () => {
     //console.log("next" + currentSongNum);
 
     useEffect(() => {
-         LoadDatas()
+         LoadData()
     },[])
 
 	return (
@@ -106,7 +106,7 @@ const PlayControl = () => {
           </div>
           <div>
             <ol className="list-group">
-            { !datas ? ("Loading...") : datas.map(( item, index) => {
+            { !data ? ("Loading...") : data.map(( item, index) => {
                 return (
                     <li
                         key={index}
