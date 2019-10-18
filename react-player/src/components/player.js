@@ -78,13 +78,13 @@ const PlayControl = () => {
           if (currentSongNum < datas.length - 1 ) {
               songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[currentSongNum].url;
               setMyMusic(new Audio(songURL));
-              console.log(currentSongNum + "Last Index" + (datas.length - 1)  + songURL);
+              //console.log(currentSongNum + "Last Index" + (datas.length - 1)  + songURL);
               PauseSong();
           }else{
               let firstindex = 1;
               songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[firstindex].url;
               setMyMusic(new Audio(songURL));
-              console.log(currentSongNum +"next" +songURL);
+              //console.log(currentSongNum +"next" +songURL);
               PauseSong();
           }
     }
