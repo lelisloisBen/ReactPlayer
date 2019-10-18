@@ -58,13 +58,15 @@ const PlayControl = () => {
           if (currentSongNum === 0) {
              let lastIndex = datas.length-1;
              songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[lastIndex].url;
-             console.log(songURL);
+             setCurrentSongNum(lastIndex);
+             //console.log(currentSongNum + "Last Index" + lastIndex + songURL);
              setMyMusic(new Audio(songURL));
              PauseSong();
           }else{
              songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[currentSongNum].url;
              setMyMusic(new Audio(songURL));
              PauseSong();
+              //console.log(currentSongNum +"previous" +songURL);
           }
           //console.log(currentSongNum);
     }
@@ -72,9 +74,19 @@ const PlayControl = () => {
 
     const NextSong = () => {
           setCurrentSongNum(currentSongNum + 1);
-          songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[currentSongNum].url;
-          setMyMusic(new Audio(songURL));
-          PauseSong();
+
+          if (currentSongNum < datas.length - 1 ) {
+              songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[currentSongNum].url;
+              setMyMusic(new Audio(songURL));
+              console.log(currentSongNum + "Last Index" + (datas.length - 1)  + songURL);
+              PauseSong();
+          }else{
+              let firstindex = 1;
+              songURL =  "https://assets.breatheco.de/apis/sound/"+ datas[firstindex].url;
+              setMyMusic(new Audio(songURL));
+              console.log(currentSongNum +"next" +songURL);
+              PauseSong();
+          }
     }
 
     //console.log("next" + currentSongNum);
