@@ -11,6 +11,10 @@ const PlayControl = () => {
 
     var songURL = "";
 
+    // all the information is reading by fetch as Json (Java Script Object Notation)
+    // The LoadData arrow function must be called inside of useEffects hooks to work properly the fetch data
+
+
     const LoadData = () => {
      fetch('https://assets.breatheco.de/apis/sound/songs')
         .then(function(response) {
@@ -29,7 +33,7 @@ const PlayControl = () => {
 
     const Getplay = (event) => {
         songURL = "https://assets.breatheco.de/apis/sound/"+event.target.dataset.url;
-        setCurrentSongNum(event.target.dataset.songnum);
+        setCurrentSongNum(event.target.dataset.index);
         setMyMusic(new Audio(songURL));
         setMyMusicName(event.target.dataset.name);
     }
@@ -48,29 +52,33 @@ const PlayControl = () => {
           if (currentSongNum === 0) {
              let lastIndex = data.length-1;
              songURL =  "https://assets.breatheco.de/apis/sound/"+ data[lastIndex].url;
-             setCurrentSongNum(lastIndex);
+             setCurrentSongNum(currentSongNum + lastIndex);
              setMyMusic(new Audio(songURL));
              setMyMusicName(data[lastIndex].name);
              PauseSong();
           }else{
-             songURL =  "https://assets.breatheco.de/apis/sound/"+ data[currentSongNum].url;
+             songURL =  "https://assets.breatheco.de/apis/sound/"+ data[currentSongNum - 1].url;
              setMyMusic(new Audio(songURL));
-             setMyMusicName(data[currentSongNum].name);
+             setMyMusicName(data[currentSongNum - 1].name);
              PauseSong();
           }
     }
     const NextSong = () => {
           setCurrentSongNum(currentSongNum + 1);
-          if (currentSongNum < data.length - 1 ) {
+          //console.log("current" + currentSongNum + "URL" + songURL + "mymusicname" + myMusicName);
+          if (currentSongNum === data.length - 1  || currentSongNum < data.length - 1 ) {
               songURL =  "https://assets.breatheco.de/apis/sound/"+ data[currentSongNum].url;
               setMyMusic(new Audio(songURL));
               setMyMusicName(data[currentSongNum].name);
+              //console.log("current" + currentSongNum + "URL" +songURL + "data Length" + data.length - 1);
               PauseSong();
           }else{
-              let firstindex = 1;
+              let firstindex = 0;
               songURL =  "https://assets.breatheco.de/apis/sound/"+ data[firstindex].url;
               setMyMusic(new Audio(songURL));
               setMyMusicName(data[firstindex].name);
+              setCurrentSongNum(0);
+              //console.log("current" + currentSongNum + "URL" +songURL + "First index" + firstindex);
               PauseSong();
           }
     }
@@ -97,9 +105,10 @@ const PlayControl = () => {
                                 key={index}
                                 className="list-group-item clickme"
                                 onClick={Getplay}
+                                // with data- we are defined our own attributes as: name, url and index
                                 data-name={item.name}
                                 data-url={item.url}
-                                data-songnum={index}
+                                data-index={index}
                             >
                                 {index + 1} - {item.name} - URL = {item.url}
                             </li>
