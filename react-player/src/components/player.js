@@ -31,12 +31,16 @@ const PlayControl = () => {
         });
     }
 
-    const Getplay = (event) => {
-        songURL = "https://assets.breatheco.de/apis/sound/"+event.target.dataset.url;
-        setCurrentSongNum(event.target.dataset.index);
+    const Getplay = (item, index) => {
+        // songURL = "https://assets.breatheco.de/apis/sound/"+event.target.dataset.url;
+        songURL = "https://assets.breatheco.de/apis/sound/"+item.url;
+        // setCurrentSongNum(event.target.dataset.index);
+        setCurrentSongNum(index);
         setMyMusic(new Audio(songURL));
-        setMyMusicName(event.target.dataset.name);
+        setMyMusicName(item.name);
     }
+    console.log(myMusic);
+    
     const PlaySong = () => {
         myMusic.pause();
         myMusic.currentTime = 0;
@@ -94,7 +98,7 @@ const PlayControl = () => {
             <button type="button" className="btn btn-outline-success m-3" onClick={NextSong}>Next</button>
         </div>
         <div className="container">
-            <div class="alert alert-primary my-3" role="alert">
+            <div className="alert alert-primary my-3" role="alert">
                 {myMusicName}
             </div>
             <div>
@@ -104,11 +108,11 @@ const PlayControl = () => {
                             <li
                                 key={index}
                                 className="list-group-item clickme"
-                                onClick={Getplay}
+                                onClick={() => Getplay(item, index)}
                                 // with data- we are defined our own attributes as: name, url and index
-                                data-name={item.name}
-                                data-url={item.url}
-                                data-index={index}
+                                // data-name={item.name}
+                                // data-url={item.url}
+                                // data-index={index}
                             >
                                 {index + 1} - {item.name} - URL = {item.url}
                             </li>
